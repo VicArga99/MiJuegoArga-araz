@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
      },
     
       number: {
-        color: theme.colors.primary,
+        color: theme.colors.textColor,
         fontSize: 18,
             
     },

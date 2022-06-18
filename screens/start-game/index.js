@@ -1,12 +1,13 @@
 import React, {useState}  from 'react';
 import { Text, View, TextInput, Button, TouchableWithoutFeedback, Keyboard } from 'react-native';
-import { Card, Input } from "../../components/index";
+import { Input, Card, NumberContainer, CustomText } from "../../components/index";
 import { styles } from "./styles";
 import theme from "../../constants/theme";
 
 
 
-const StartGame = () => {
+
+const StartGame = ({onStartGame}) => {
   const[enteredValue, setEnteredValue] = useState("");
   const[confirmed, setConfirmed] = useState(false);
   const[selectedNumber, setSelectedNumber] = useState("");
@@ -28,7 +29,16 @@ const StartGame = () => {
         setEnteredValue("");
   };
 
-  const confirmedOuput = confirmed ? <Text >El número elegido :{ selectedNumber }</Text>: null
+  const confirmedOuput = confirmed ? (
+    <Card style={styles.inputContainer}>
+      <CustomText>Tu selección</CustomText>
+      <NumberContainer>{ selectedNumber }</NumberContainer>
+      <Button title='Empezar Juego'
+       onPress={() => onStartGame(selectedNumber)} 
+       color={theme.colors.secondary}>
+</Button>
+  </Card>
+  ): null;
      
     
    
@@ -39,9 +49,9 @@ const StartGame = () => {
         Keyboard.dismiss();
       }}>
         <View style={styles.container}>
-          <Text style={styles.title}>Comenzar Juego</Text>
-          <View style={styles.inputContainer}>
-          <Text style={styles.subtitle}>Elija el número</Text>
+          <CustomText style={styles.title}>Comenzar Juego</CustomText>
+          <Card style={styles.inputContainer}>
+          <CustomText style={styles.subtitle}>Elija el número</CustomText>
           <Input 
           placeholder='11' 
           keyboardType='numeric'
@@ -64,10 +74,11 @@ const StartGame = () => {
             onPress={() => onHandlerConfirm()}
             />
           </View>
-          </View>
+          </Card>
           { confirmedOuput }
         </View>
         </TouchableWithoutFeedback>
+        
         );
 };
 
